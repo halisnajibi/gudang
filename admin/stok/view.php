@@ -1,14 +1,14 @@
 <?php 
 require'../../functions.php';
 //menampilkan tabel barang masuk
-$bm=tampil("SELECT * FROM brg_masuk,stok WHERE brg_masuk.id_barang=stok.id_barang");
+$stok=tampil("SELECT * FROM stok");
 //codingan simpan data
-if(isset($_POST["submit"]) ){
-    if(tambah_bm($_POST) > 0){
+if(isset($_POST["simpan"]) ){
+    if(tambah_stok($_POST) > 0){
         echo"
         <script>
                 alert('data berhasil di tambahkan');
-                
+                  document.location.href='view.php';
          </script>
             ";
     }else{
@@ -18,7 +18,7 @@ if(isset($_POST["submit"]) ){
          </script>
             ";
     }
-    var_dump(tambah_bm($_POST));
+    var_dump($_POST["simpan"]);
 }
 
 ?>
@@ -80,9 +80,9 @@ if(isset($_POST["submit"]) ){
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="view.php">Barang Masuk</a>
+                                    <a class="nav-link" href="../barang masuk/view.php">Barang Masuk</a>
                                     <a class="nav-link" href="../barang keluar/view.php">Barang Keluar</a>
-                                    <a class="nav-link" href="../stok/view.php">Stok</a>
+                                    <a class="nav-link" href="view.php">Stok</a>
                                 </nav>
                             </div>
                 </nav>
@@ -90,7 +90,7 @@ if(isset($_POST["submit"]) ){
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Table Barang Masuk</h3>
+                        <h3 class="mt-4">Table Stok Barang</h3>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia magnam nisi, harum sed dolorem ducimus incidunt explicabo. Voluptate inventore, illum mollitia alias neque similique dolor, expedita cumque perferendis laborum quidem?</li>
                         </ol>
@@ -115,12 +115,11 @@ if(isset($_POST["submit"]) ){
                                         </tr>
                                     </thead>
                                       <?php $i=1; ?>
-                                      <?php foreach($bm as $data): ?>
+                                      <?php foreach($stok as $data): ?>
                                     <tbody>
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
-                                            <td><?php echo $data["tanggal"]; ?></td>
                                             <td><?php echo $data["jumlah"]; ?></td>
                                             <td><?php echo $data["keterangan"]; ?></td>
                                         </tr>
@@ -148,34 +147,20 @@ if(isset($_POST["submit"]) ){
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Barang Baru</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Stok</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                      <form action="" method="post">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
-                            <select name="brg_masuk" id="" class="form-control">
-                                <?php 
-                                $tabel=tampil("SELECT * FROM stok");
-                                foreach($tabel as $data):
-                                    $nama_brg=$data["nama_barang"];
-                                    $id=$data["id_barang"];
-                              ?>
-                              <option value="<?php echo $id ?>"><?php echo $nama_brg ?></option>
-                              <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Jumlah</label>
-                            <input type="number" class="form-control" id="exampleInputPassword1" name="jumlah">
-                        </div>
-                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Keterangan</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan"> 
-                             <button type="submit" class="btn btn-primary mt-3" name="submit">Simpan</button>
+                        <label for="exampleFormControlInput1" class="form-label">Nama Barang</label>
+                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_barang">
+                          <label for="exampleFormControlInput1" class="form-label">Jumlah</label>
+                         <input type="number" class="form-control" id="exampleFormControlInput1" name="jumlah">
+                          <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
+                         <input type="text" class="form-control" id="exampleFormControlInput1" name="keterangan">
+                        <button type="submit" class="btn btn-primary mt-3" name="simpan">Simpan</button>
                       </form>
-                        </div>
+                     
                 </div>
                 <div class="modal-footer">
                    
