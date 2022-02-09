@@ -3,12 +3,11 @@ require'../../functions.php';
 //menampilkan tabel barang masuk
 $bm=tampil("SELECT * FROM brg_masuk,stok WHERE brg_masuk.id_barang=stok.id_barang");
 //codingan simpan data
-if(isset($_POST["submit"]) ){
-    if(tambah_bm($_POST) > 0){
+if(isset($_POST["submit_masuk"]) ){
+    if(barang_masuk($_POST) > 0){
         echo"
         <script>
                 alert('data berhasil di tambahkan');
-                
          </script>
             ";
     }else{
@@ -18,7 +17,7 @@ if(isset($_POST["submit"]) ){
          </script>
             ";
     }
-    var_dump(tambah_bm($_POST));
+    var_dump($_POST["submit_masuk"]);
 }
 
 ?>
@@ -157,23 +156,17 @@ if(isset($_POST["submit"]) ){
                             <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
                             <select name="brg_masuk" id="" class="form-control">
                                 <?php 
-                                $tabel=tampil("SELECT * FROM stok");
-                                foreach($tabel as $data):
-                                    $nama_brg=$data["nama_barang"];
-                                    $id=$data["id_barang"];
-                              ?>
-                              <option value="<?php echo $id ?>"><?php echo $nama_brg ?></option>
-                              <?php endforeach; ?>
+                               $q=mysqli_query($conn,"SELECT * FROM stok");
+                               while($data=mysqli_fetch_assoc($q)){
+                                echo' <option  value=" '.$data["id_barang"] .' ">'.$data["nama_barang"].'</option> ';
+                               }
+                               ?>
                             </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Jumlah</label>
-                            <input type="number" class="form-control" id="exampleInputPassword1" name="jumlah">
                         </div>
                          <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Keterangan</label>
                             <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan"> 
-                             <button type="submit" class="btn btn-primary mt-3" name="submit">Simpan</button>
+                             <button type="submit" class="btn btn-primary mt-3" name="submit_masuk">Simpan</button>
                       </form>
                         </div>
                 </div>
