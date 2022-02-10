@@ -8,6 +8,7 @@ if(isset($_POST["submit_masuk"]) ){
         echo"
         <script>
                 alert('data berhasil di tambahkan');
+                  document.location.href='view.php';
          </script>
             ";
     }else{
@@ -108,7 +109,7 @@ if(isset($_POST["submit_masuk"]) ){
                                             <th>No</th>
                                             <th>Nama Barang</th>
                                             <th>Tanggal</th>
-                                            <th>Jumlah</th>
+                                            <th>Quantity</th>
                                             <th>Keterangan</th>
                                          
                                         </tr>
@@ -120,8 +121,8 @@ if(isset($_POST["submit_masuk"]) ){
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
                                             <td><?php echo $data["tanggal"]; ?></td>
-                                            <td><?php echo $data["jumlah"]; ?></td>
-                                            <td><?php echo $data["keterangan"]; ?></td>
+                                            <td><?php echo $data["qty_masuk"]; ?></td>
+                                            <td><?php echo $data["keterangan_masuk"]; ?></td>
                                         </tr>
                                       <?php $i++; ?>
                                       <?php endforeach; ?>
@@ -163,12 +164,17 @@ if(isset($_POST["submit_masuk"]) ){
                                ?>
                             </select>
                         </div>
+                        <div class="mb-3">
+                             <label for="exampleInputPassword1" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="exampleInputPassword1" name="qty_masuk"> 
+                        </div>
                          <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Keterangan</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan"> 
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan_masuk"> 
                              <button type="submit" class="btn btn-primary mt-3" name="submit_masuk">Simpan</button>
+                          </div>
                       </form>
-                        </div>
+                       
                 </div>
                 <div class="modal-footer">
                    

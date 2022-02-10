@@ -33,12 +33,22 @@ function tambah_stok($pos){
 function barang_masuk($pos){
     global $conn;
     $nb=htmlspecialchars($pos["brg_masuk"]);
-    $ket=htmlspecialchars($pos["keterangan"]);
+    $qty=htmlspecialchars($pos["qty_masuk"]);
+    $ket=htmlspecialchars($pos["keterangan_masuk"]);
 
-    $query="INSERT INTO brg_masuk 
+    $query="INSERT INTO brg_masuk
             VALUES
-            ('','$nb','$ket')";
+            ('','$nb',current_timestamp(),'$qty','$ket')";
+//cek stok sekarang
+$semua_data=mysqli_query($conn,"SELECT * FROM stok WHERE id_barang='$nb'");
+$ambil_data=mysqli_fetch_assoc($semua_data);
+$stok_sekarang=$ambil_data["jumlah"];
+//tambah stok
+$tambah=$stok_sekarang + $qty;
+//sql
+    $query_update="UPDATE stok SET jumlah='$tambah' WHERE id_barang=$nb";
    mysqli_query($conn,$query);
+   mysqli_query($conn,$query_update);
     return mysqli_affected_rows($conn);
 }
 
