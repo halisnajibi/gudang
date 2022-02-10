@@ -32,7 +32,8 @@ if(isset($_POST["submit_masuk"]) ){
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Dashboard - GUDANG Admin</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" /> -->
+        <link rel="stylesheet" href="../../assets/datatable/datatables.min.css">
         <link href="../../css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
@@ -103,7 +104,7 @@ if(isset($_POST["submit_masuk"]) ){
                             <div class="card-body">
                         <!-- codingan tampil data -->
                       
-                                <table id="datatablesSimple">
+                                <table id="data_tabel" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -111,7 +112,6 @@ if(isset($_POST["submit_masuk"]) ){
                                             <th>Tanggal</th>
                                             <th>Quantity</th>
                                             <th>Keterangan</th>
-                                         
                                         </tr>
                                     </thead>
                                       <?php $i=1; ?>
@@ -183,12 +183,19 @@ if(isset($_POST["submit_masuk"]) ){
             </div>
             </div>
         <!-- akhir modal -->
+        <script src="../../assets/datatable/jquery.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../../js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="../../assets/demo/chart-area-demo.js"></script>
         <script src="../../assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../../js/datatables-simple-demo.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="../../js/datatables-simple-demo.js"></script> -->
+         <script src="../../assets/datatable/datatables.min.js"></script>
+        <script>
+            $(document).ready( function () {
+             $('#data_tabel').DataTable();
+            } );
+        </script>
     </body>
 </html>

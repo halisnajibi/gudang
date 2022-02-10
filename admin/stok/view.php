@@ -110,6 +110,7 @@ if(isset($_POST["simpan"]) ){
                                              <th>Kode Barang</th>
                                             <th>Nama Barang</th>
                                             <th>Quantity</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                       <?php $i=1; ?>
@@ -120,6 +121,7 @@ if(isset($_POST["simpan"]) ){
                                             <td><?php echo $data["kode_barang"]; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
                                             <td><?php echo $data["jumlah"]; ?></td>
+                                            
                                         </tr>
                                       <?php $i++; ?>
                                       <?php endforeach; ?>
