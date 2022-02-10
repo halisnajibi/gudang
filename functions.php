@@ -39,7 +39,9 @@ function barang_masuk($pos){
 
     $query="INSERT INTO brg_masuk
             VALUES
-            ('','$nb',current_timestamp(),'$qty','$ket')";
+            ('','$nb',current_timestamp(),'$qty','$ket')";  
+     mysqli_query($conn,$query);
+
 //cek stok sekarang
 $semua_data=mysqli_query($conn,"SELECT * FROM stok WHERE id_barang='$nb'");
 $ambil_data=mysqli_fetch_assoc($semua_data);
@@ -48,10 +50,37 @@ $stok_sekarang=$ambil_data["jumlah"];
 $tambah=$stok_sekarang + $qty;
 //sql
     $query_update="UPDATE stok SET jumlah='$tambah' WHERE id_barang=$nb";
-   mysqli_query($conn,$query);
+
    mysqli_query($conn,$query_update);
     return mysqli_affected_rows($conn);
 }
 
+//insert barang keluar
+function barang_keluar($pos){
+    global $conn;
+    $nama_brg=htmlspecialchars($pos["brg_keluar"]);
+    $qty_keluar=htmlspecialchars($pos["qty_keluar"]);
+    $penerima=htmlspecialchars($pos["penerima"]);
+    $keterangan_keluar=htmlspecialchars($pos["keterangan_keluar"]);
+
+    $query="INSERT INTO brg_keluar
+            VALUES
+            ('','$nama_brg',current_timestamp(),'$qty_keluar','$penerima','$keterangan_keluar')";  
+     mysqli_query($conn,$query);
+//cek stok sekarang
+$semua_data=mysqli_query($conn,"SELECT * FROM stok WHERE id_barang='$nama_brg'");
+$ambil_data=mysqli_fetch_assoc($semua_data);
+$stok_sekarang=$ambil_data["jumlah"];
+//tambah stok
+$kurang=$stok_sekarang - $qty_keluar;
+//sql
+    $query_update="UPDATE stok SET jumlah='$kurang' WHERE id_barang=$nama_brg";
+
+   mysqli_query($conn,$query_update);
+
+
+    return mysqli_affected_rows($conn);
+
+}
 
  ?>
