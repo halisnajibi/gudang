@@ -107,11 +107,9 @@ if(isset($_POST["simpan"]) ){
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                             <th>Kode Barang</th>
                                             <th>Nama Barang</th>
-                                            <th>Tanggal</th>
-                                            <th>Jumlah</th>
-                                            <th>Keterangan</th>
-                                         
+                                            <th>Quantity</th>
                                         </tr>
                                     </thead>
                                       <?php $i=1; ?>
@@ -119,9 +117,9 @@ if(isset($_POST["simpan"]) ){
                                     <tbody>
                                         <tr>
                                             <td><?php echo $i; ?></td>
+                                            <td><?php echo $data["kode_barang"]; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
                                             <td><?php echo $data["jumlah"]; ?></td>
-                                            <td><?php echo $data["keterangan"]; ?></td>
                                         </tr>
                                       <?php $i++; ?>
                                       <?php endforeach; ?>
@@ -151,13 +149,34 @@ if(isset($_POST["simpan"]) ){
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- membuat codingan kode barang otomatis -->
+                    <?php                            
+                                    // mengambil data barang dengan kode paling besar
+                                    $query = mysqli_query($conn, "SELECT max(kode_barang) as kodeTerbesar FROM stok");
+                                    $data = mysqli_fetch_array($query);
+                                    $kodeBarang = $data['kodeTerbesar'];
+                                    
+                                    // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+                                    // dan diubah ke integer dengan (int)
+                                    $urutan = (int) substr($kodeBarang, 3, 3);
+                                    
+                                    // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+                                    $urutan++;
+                                    
+                                    // membentuk kode barang baru
+                                    // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+                                    // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+                                    // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+                                    $huruf = "KDB";
+                                    $kodeBarang = $huruf . sprintf("%03s", $urutan);
+                      ?>
                      <form action="" method="post">
+                         <label for="exampleFormControlInput1" class="form-label">Kode Barang</label>
+                          <input type="text" class="form-control" id="exampleFormControlInput1" name="kd_brg"  readonly value="<?php echo $kodeBarang ?> " autocomplete="off" required>
                         <label for="exampleFormControlInput1" class="form-label">Nama Barang</label>
-                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_barang">
-                          <label for="exampleFormControlInput1" class="form-label">Jumlah</label>
-                         <input type="number" class="form-control" id="exampleFormControlInput1" name="jumlah">
-                          <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
-                         <input type="text" class="form-control" id="exampleFormControlInput1" name="keterangan">
+                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_barang" autocomplete="off">
+                          <label for="exampleFormControlInput1" class="form-label">Quantity</label>
+                         <input type="number" class="form-control" id="exampleFormControlInput1" name="qty">
                         <button type="submit" class="btn btn-primary mt-3" name="simpan">Simpan</button>
                       </form>
                      

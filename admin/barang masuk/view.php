@@ -170,7 +170,7 @@ if(isset($_POST["submit_masuk"]) ){
                         </div>
                          <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Keterangan</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan_masuk"> 
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan_masuk" autocomplete="off"> 
                              <button type="submit" class="btn btn-primary mt-3" name="submit_masuk">Simpan</button>
                           </div>
                       </form>

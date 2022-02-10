@@ -17,13 +17,14 @@ function tampil($query){
 //insert tabel stok
 function tambah_stok($pos){
     global $conn;
+    $kd_brg=htmlspecialchars($pos["kd_brg"]);
      $nama_barang=htmlspecialchars($pos["nama_barang"]);
-    $jumlah=htmlspecialchars($pos["jumlah"]);
-    $keterangan=htmlspecialchars($pos["keterangan"]);
+    $qty=htmlspecialchars($pos["qty"]);
+    
  
     $query="INSERT INTO stok 
             VALUES
-            ('','$nama_barang','$jumlah','$keterangan')
+            ('','$kd_brg','$nama_barang','$qty')
             ";
    mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
