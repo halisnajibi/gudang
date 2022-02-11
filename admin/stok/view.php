@@ -34,6 +34,7 @@ if(isset($_POST["simpan"]) ){
         <title>Dashboard - GUDANG Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../../css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../../assets/fontawesome-free/css/all.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -121,6 +122,11 @@ if(isset($_POST["simpan"]) ){
                                             <td><?php echo $data["kode_barang"]; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
                                             <td><?php echo $data["jumlah"]; ?></td>
+                                            <td>
+                                            <a href="edit.php?id_barang=<?php echo$data ["id_barang"] ?>"><i class="fas fa-pen-square data-bs-placement="top" title="Edit""></i></a>
+                                            <a href="hapus.php?id_barang=<?php echo $data["id_barang"] ?>" onclick="return confirm('anda yakin untuk menghapus')
+                                            "><i class="fas fa-trash data-bs-placement="top" title="Hapus"""></i></a>
+                                        </td>
                                             
                                         </tr>
                                       <?php $i++; ?>
@@ -197,5 +203,25 @@ if(isset($_POST["simpan"]) ){
         <script src="../../assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../../js/datatables-simple-demo.js"></script>
+       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     </body>
+    <!-- <script>
+            swal({
+  title: "Yakin Untuk Menghapus?",
+  text: "Data Yang Anda Delete Tidak Bisa Di Pulihkan Lagi!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Berhasil,Data Terhapus!", {
+      icon: "success",
+    });
+  } else {
+    swal("Anda Gagal Menghapus Data!");
+  }
+})
+    </script> -->
 </html>
