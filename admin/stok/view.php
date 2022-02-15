@@ -114,16 +114,16 @@ if(isset($_POST["simpan"]) ){
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                      <?php $i=1; ?>
-                                      <?php foreach($stok as $data): ?>
+                                    
+                                     
                                     <tbody>
-                                        <tr>
+                                        <tr>   <?php $i=1; ?>
+                                            <?php foreach($stok as $data): ?>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $data["kode_barang"]; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
                                             <td><?php echo $data["jumlah"]; ?></td>
-                                            <td>
-                                            <a href="edit.php?id_barang=<?php echo$data ["id_barang"] ?>"><i class="fas fa-pen-square data-bs-placement="top" title="Edit""></i></a>
+                                            <td> 
                                             <a href="hapus.php?id_barang=<?php echo $data["id_barang"] ?>" onclick="return confirm('anda yakin untuk menghapus')
                                             "><i class="fas fa-trash data-bs-placement="top" title="Hapus"""></i></a>
                                         </td>
@@ -186,8 +186,7 @@ if(isset($_POST["simpan"]) ){
                           <label for="exampleFormControlInput1" class="form-label">Quantity</label>
                          <input type="number" class="form-control" id="exampleFormControlInput1" name="qty">
                         <button type="submit" class="btn btn-primary mt-3" name="simpan">Simpan</button>
-                      </form>
-                     
+                      </form>    
                 </div>
                 <div class="modal-footer">
                    

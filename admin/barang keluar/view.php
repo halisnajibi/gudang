@@ -116,8 +116,8 @@ if(isset($_POST["submit_keluar"]) ){
                                         </tr>
                                     </thead>
                                       <?php $i=1; ?>
-                                      <?php foreach($bm as $data): ?>
-                                    <tbody>
+                                    <tbody>  
+                                        <?php foreach($bm as $data): ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>

@@ -89,4 +89,7 @@ $kurang=$stok_sekarang - $qty_keluar;
         mysqli_query($conn,"DELETE FROM stok WHERE id_barang=$id_barang");
       return  mysqli_affected_rows($conn);
     }
+
+//update
+
  ?>

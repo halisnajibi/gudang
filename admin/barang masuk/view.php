@@ -104,30 +104,30 @@ if(isset($_POST["submit_masuk"]) ){
                             <div class="card-body">
                         <!-- codingan tampil data -->
                       
-                                <table id="data_tabel" class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Barang</th>
-                                            <th>Tanggal</th>
-                                            <th>Quantity</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                      <?php $i=1; ?>
-                                      <?php foreach($bm as $data): ?>
-                                    <tbody>
+                             <table id="data_tabel" class="table table-striped" >
+                                <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>nama barang</th>
+                                        <th>tanggal</th>
+                                         <th>quantity</th>
+                                        <th>keterangan</th>
+                                    </tr>
+                                </thead>  
+                                    <?php $i=1; ?>
+                                   <tbody>    
+                                 <?php foreach($bm as $data): ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
                                             <td><?php echo $data["tanggal"]; ?></td>
                                             <td><?php echo $data["qty_masuk"]; ?></td>
                                             <td><?php echo $data["keterangan_masuk"]; ?></td>
-                                        </tr>
-                                      <?php $i++; ?>
+                                    </tr>         
+                                    <?php $i++; ?>
                                       <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                                       </tbody> 
+                            </table>
                         
                             </div>
                         </div>
@@ -183,6 +183,9 @@ if(isset($_POST["submit_masuk"]) ){
             </div>
             </div>
         <!-- akhir modal -->
+        <!-- modal edit -->
+
+<!-- akhir modal edit -->
         <script src="../../assets/datatable/jquery.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../../js/scripts.js"></script>
