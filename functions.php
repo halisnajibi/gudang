@@ -83,6 +83,7 @@ $kurang=$stok_sekarang - $qty_keluar;
 
 }
 
+
 // hapus
     function hapus_stok($id_barang){
         global $conn;
@@ -90,6 +91,59 @@ $kurang=$stok_sekarang - $qty_keluar;
       return  mysqli_affected_rows($conn);
     }
 
-//update
+function hapus_bm($id){
+    global $conn;
+    mysqli_query($conn,"DELETE FROM brg_masuk WHERE id_bm=$id");
+    return mysqli_affected_rows($conn);
+}
 
+function hapus_keluar($id){
+    global $conn;
+    mysqli_query($conn,"DELETE FROM brg_keluar WHERE id_bk=$id");
+    return mysqli_affected_rows($conn);
+}
+
+//update
+function update_masuk($pos){
+global $conn;
+$id=$pos["id_bm"];
+$ket=htmlspecialchars($pos["keterangan_masuk"]);
+
+$sql="UPDATE brg_masuk SET
+        
+        tanggal=current_timestamp(),
+      
+        keterangan_masuk='$ket'
+        WHERE id_bm=$id
+        ";
+mysqli_query($conn,$sql);
+return mysqli_affected_rows($conn);
+}
+
+function update_stok($pos){
+    $id=$pos["id_barang"];
+    global $conn;
+    $nb=htmlspecialchars($pos["nama_barang"]);
+    $jumlah=htmlspecialchars($pos["jumlah"]);
+    $sql="UPDATE stok SET 
+           nama_barang='$nb',
+           jumlah='$jumlah'
+           WHERE id_barang=$id ";
+    mysqli_query($conn,$sql);
+   return  mysqli_affected_rows($conn);
+}
+
+function update_keluar($pos){
+    global $conn;
+    $id=$pos["id_bk"];
+    $penerima=$pos["penerima"];
+    $ket=$pos["keterangan_keluar"];
+
+    $Sql="UPDATE brg_keluar SET
+          penerima='$penerima',
+          keterangan_keluar='$ket'
+          WHERE id_bk=$id";
+          mysqli_query($conn,$Sql);
+          return mysqli_affected_rows($conn);
+}
  ?>

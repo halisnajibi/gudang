@@ -1,24 +1,25 @@
 <?php 
 require'../../functions.php';
-//menampilkan tabel barang masuk
-$bm=tampil("SELECT * FROM brg_masuk,stok WHERE brg_masuk.id_barang=stok.id_barang");
+$id=$_GET["id_bk"];
+$bk=tampil("SELECT * FROM brg_keluar WHERE id_bk=$id")[0];
 //codingan simpan data
-if(isset($_POST["submit_masuk"]) ){
-    if(barang_masuk($_POST) > 0){
+if(isset($_POST["update_keluar"]) ){
+    if(update_keluar($_POST) > 0){
         echo"
         <script>
-                alert('data berhasil di tambahkan');
+                alert('data berhasil di update');
                   document.location.href='view.php';
          </script>
             ";
     }else{
         echo"
         <script>
-                alert('data gagal di tambahkan');
+                alert('data gagal di update');
+                  document.location.href='view.php';
          </script>
             ";
     }
-    var_dump($_POST["submit_masuk"]);
+
 }
 
 ?>
@@ -81,9 +82,9 @@ if(isset($_POST["submit_masuk"]) ){
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="view.php">Barang Masuk</a>
+                                    <a class="nav-link" href="../barang masuk/view.php">Barang Masuk</a>
                                     <a class="nav-link" href="../barang keluar/view.php">Barang Keluar</a>
-                                    <a class="nav-link" href="../stok/view.php">Stok</a>
+                                    <a class="nav-link" href="view.php">Stok</a>
                                 </nav>
                             </div>
                 </nav>
@@ -91,49 +92,26 @@ if(isset($_POST["submit_masuk"]) ){
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Table Barang Masuk</h3>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia magnam nisi, harum sed dolorem ducimus incidunt explicabo. Voluptate inventore, illum mollitia alias neque similique dolor, expedita cumque perferendis laborum quidem?</li>
-                        </ol>
+                        <h3 class="mt-4">Edit Barang keluar</h3>
                          <div class="card mb-4">
                             <div class="card-header">
-                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                               Tambah Barang
-                                </button>
+                              
                             </div>
                             <div class="card-body">
-                        <!-- codingan tampil data -->
-                      
-                             <table id="data_tabel" class="table table-striped" >
-                                <thead>
-                                    <tr>
-                                        <th>no</th>
-                                        <th>nama barang</th>
-                                        <th>tanggal</th>
-                                         <th>quantity</th>
-                                        <th>keterangan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>  
-                                    <?php $i=1; ?>
-                                   <tbody>    
-                                 <?php foreach($bm as $data): ?>
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php echo $data["nama_barang"]; ?></td>
-                                            <td><?php echo $data["tanggal"]; ?></td>
-                                            <td><?php echo $data["qty_masuk"]; ?></td>
-                                            <td><?php echo $data["keterangan_masuk"]; ?></td>
-                                            <td>
-                                                <a href="edit.php?id_bm=<?php echo $data["id_bm"]; ?>"><button type="submit" name="edit" class="btn btn-warning">Edit</button></a>
-                                                 <a href="hapus.php?id_bm=<?php echo $data["id_bm"];?>" onclick="return confirm('anda yakin untuk menghapus?')"><button type="submit" name="hapus" class="btn btn-danger">Hapus</button></a>
-                                            </td>
-                                    </tr>         
-                                    <?php $i++; ?>
-                                      <?php endforeach; ?>
-                                       </tbody> 
-                            </table>
-                        
+                               <form action="" method="post">
+                                    <input type="hidden" name="id_bk" value="<?php echo $bk["id_bk"];?>">
+                       <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Penerima</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="penerima" autocomplete="off" value="<?php echo $bk["penerima"] ?>"> 
+                            
+                          </div>
+                         <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Keterangan</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan_keluar" autocomplete="off" value="<?php echo $bk["keterangan_keluar"] ?>"> 
+                             <button type="submit" class="btn btn-primary mt-3" name="update_keluar">Update</button>
+                          </div>
+                      </form>
+                       
                             </div>
                         </div>
                     </div>
@@ -157,29 +135,7 @@ if(isset($_POST["submit_masuk"]) ){
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                     <form action="" method="post">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
-                            <select name="brg_masuk" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM stok");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_barang"] .' ">'.$data["nama_barang"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                             <label for="exampleInputPassword1" class="form-label">Quantity</label>
-                            <input type="number" class="form-control" id="exampleInputPassword1" name="qty_masuk"> 
-                        </div>
-                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Keterangan</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan_masuk" autocomplete="off"> 
-                             <button type="submit" class="btn btn-primary mt-3" name="submit_masuk">Simpan</button>
-                          </div>
-                      </form>
-                       
+                    
                 </div>
                 <div class="modal-footer">
                    
@@ -207,3 +163,5 @@ if(isset($_POST["submit_masuk"]) ){
         </script>
     </body>
 </html>
+
+?>

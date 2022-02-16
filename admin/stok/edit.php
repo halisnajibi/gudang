@@ -1,24 +1,30 @@
 <?php 
 require'../../functions.php';
+
+
+// tangkap data yg dikirm
+$id=$_GET["id_barang"];
 //menampilkan tabel barang masuk
-$stok=tampil("SELECT * FROM stok");
+$stok=tampil("SELECT * FROM stok WHERE id_barang=$id")[0];
+
 //codingan simpan data
-if(isset($_POST["simpan"]) ){
-    if(tambah_stok($_POST) > 0){
+if(isset($_POST["update_stok"]) ){
+    if(update_stok($_POST) > 0){
         echo"
         <script>
-                alert('data berhasil di tambahkan');
+                alert('data berhasil di update');
                   document.location.href='view.php';
          </script>
             ";
     }else{
         echo"
         <script>
-                alert('data gagal di tambahkan');
+                alert('data gagal di update');
+                
          </script>
             ";
     }
-    var_dump($_POST["simpan"]);
+
 }
 
 ?>
@@ -32,9 +38,9 @@ if(isset($_POST["simpan"]) ){
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Dashboard - GUDANG Admin</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" /> -->
+        <link rel="stylesheet" href="../../assets/datatable/datatables.min.css">
         <link href="../../css/styles.css" rel="stylesheet" />
-        <link rel="stylesheet" href="../../assets/fontawesome-free/css/all.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -91,43 +97,26 @@ if(isset($_POST["simpan"]) ){
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Table Stok Barang</h3>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia magnam nisi, harum sed dolorem ducimus incidunt explicabo. Voluptate inventore, illum mollitia alias neque similique dolor, expedita cumque perferendis laborum quidem?</li>
-                        </ol>
+                        <h3 class="mt-4">Edit Stok Barang</h3>
                          <div class="card mb-4">
                             <div class="card-header">
-                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                               Tambah Barang
-                                </button>
+                              
                             </div>
                             <div class="card-body">
-                        <!-- codingan tampil data -->
-                      
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                             <th>Kode Barang</th>
-                                            <th>Nama Barang</th>
-                                            <th>Quantity</th>
-                                         
-                                        </tr>
-                                    </thead>
-                                      <?php $i=1; ?>
-                                      <?php foreach($stok as $data): ?>
-                                    <tbody>
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php echo $data["kode_barang"]; ?></td>
-                                            <td><?php echo $data["nama_barang"]; ?></td>
-                                            <td><?php echo $data["jumlah"]; ?></td>
-                                        </tr>
-                                      <?php $i++; ?>
-                                      <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                        
+                               <form action="" method="post">
+                                    <input type="hidden" name="id_barang" value="<?php echo $stok["id_barang"];?>">
+                     <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Nama Barang</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="nama_barang" autocomplete="off" value="<?php echo $stok["nama_barang"] ?>"> 
+                           
+                          </div>
+                         <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="exampleInputPassword1" name="jumlah" autocomplete="off" value="<?php echo $stok["jumlah"] ?>"> 
+                             <button type="submit" class="btn btn-primary mt-3" name="update_stok">Update</button>
+                          </div>
+                      </form>
+                       
                             </div>
                         </div>
                     </div>
@@ -142,55 +131,40 @@ if(isset($_POST["simpan"]) ){
                 </footer>
             </div>
         </div>
-         <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
+        <!-- modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Barang Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                   
+                </div>
+                </div>
+            </div>
+            </div>
+        <!-- akhir modal -->
+        <!-- modal edit -->
 
-<!-- Modal -->
-<div class="modal fade" id="modal-2" tabindex="-1" aria-labelledby="modal-2" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal-2">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- akhir modal edit -->
+        <script src="../../assets/datatable/jquery.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../../js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="../../assets/demo/chart-area-demo.js"></script>
         <script src="../../assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../../js/datatables-simple-demo.js"></script>
-       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+        <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="../../js/datatables-simple-demo.js"></script> -->
+         <script src="../../assets/datatable/datatables.min.js"></script>
+        <script>
+            $(document).ready( function () {
+             $('#data_tabel').DataTable();
+            } );
+        </script>
     </body>
-    <!-- <script>
-            swal({
-  title: "Yakin Untuk Menghapus?",
-  text: "Data Yang Anda Delete Tidak Bisa Di Pulihkan Lagi!",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("Berhasil,Data Terhapus!", {
-      icon: "success",
-    });
-  } else {
-    swal("Anda Gagal Menghapus Data!");
-  }
-})
-    </script> -->
 </html>

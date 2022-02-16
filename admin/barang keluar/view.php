@@ -103,7 +103,7 @@ if(isset($_POST["submit_keluar"]) ){
                             <div class="card-body">
                         <!-- codingan tampil data -->
                       
-                                <table id="datatablesSimple">
+                                <table id="datatablesSimple" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -112,7 +112,7 @@ if(isset($_POST["submit_keluar"]) ){
                                             <th>Quantity</th>
                                             <th>Penerima</th>
                                             <th>Keterangan</th>
-                                         
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                       <?php $i=1; ?>
@@ -124,7 +124,11 @@ if(isset($_POST["submit_keluar"]) ){
                                             <td><?php echo $data["tanggal"]; ?></td>
                                             <td><?php echo $data["qty_keluar"]; ?></td>
                                              <td><?php echo $data["penerima"]; ?></td>
-                                            <td><?php echo $data["keterangan_keluar"]; ?></td>
+                                           <td><?php echo $data["keterangan_keluar"]; ?></td>
+                                           <td>
+                                               <a href="edit.php?id_bk=<?php echo $data["id_bk"] ?>"><button type="submit" name="edit" class="btn btn-warning">Edit</button> </a>
+                                                 <a href="hapus.php?id_bk=<?php echo $data["id_bk"] ?>" onclick="return confirm('anda yakin untuk menghapus?')"><button type="submit" name="hapus" class="btn btn-danger">Hapus</button> </a>
+                                           </td>
                                         </tr>
                                       <?php $i++; ?>
                                       <?php endforeach; ?>
