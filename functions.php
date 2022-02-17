@@ -44,6 +44,20 @@ function tambah_gudang($pos){
             mysqli_query($conn,$sql);
           return  mysqli_affected_rows($conn);
 }
+// insert suplier
+function tambah_pemasok($pos){
+    global $conn;
+    $kd=$pos["kd_pemasok"];
+    $nama_pemasok=htmlspecialchars($pos["nama_pemasok"]);
+    $telepon=htmlspecialchars($pos["telepon"]);
+    $alamat=htmlspecialchars($pos["alamat"]);
+
+    $sql="INSERT INTO pemasok
+            VALUES
+            ('','$kd','$nama_pemasok','$telepon','$alamat')";
+            mysqli_query($conn,$sql);
+            return mysqli_affected_rows($conn);
+}
 
 //insert tabel barang masuk
 function barang_masuk($pos){
@@ -124,6 +138,12 @@ function hapus_gudang($id){
     return mysqli_affected_rows($conn);
 }
 
+function hapus_pemasok($id){
+global $conn;
+mysqli_query($conn,"DELETE FROM pemasok WHERE id_pemasok=$id");
+return mysqli_affected_rows($conn);
+}
+
 //update
 function update_masuk($pos){
 global $conn;
@@ -184,5 +204,21 @@ function update_gudang($pos){
         ";
         mysqli_query($conn,$sql);
         return mysqli_affected_rows($conn);
+}
+
+function update_pemasok($pos){
+    global $conn;
+    $id=$pos["id_pemasok"];
+    $nama_pemasok=htmlspecialchars($pos["nama_pemasok"]);
+    $telepon=htmlspecialchars($pos["telepon"]);
+    $alamat=htmlspecialchars($pos["alamat_pemasok"]);
+
+    $sql="UPDATE pemasok SET
+            nama_pemasok='$nama_pemasok',
+            telepon_pemasok='$telepon',
+            alamat_pemasok='$alamat'
+            WHERE id_pemasok=$id";
+            mysqli_query($conn,$sql);
+            return mysqli_affected_rows($conn);
 }
  ?>
