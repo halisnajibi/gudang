@@ -13,6 +13,7 @@ require'functions.php';
         <title>Dashboard - GUDANG Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="assets/fontawesome-free-6.0.0-web/css/all.min.css">  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -59,10 +60,35 @@ require'functions.php';
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="admin/stok/view.php">Barang</a> 
+                                    <a class="nav-link" href="">Gudang</a>
+                                    <a class="nav-link" href="">Suplier</a>
+                                     <a class="nav-link" href="">Satuan</a>
+                                    <a class="nav-link" href="">Karyawan</a>
+                            </div>
+                              <div class="sb-sidenav-menu-heading">Transaksi</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-handshake"></i></div>
+                                Data Transaksi
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="transaksi" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
+                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
+                            </div>
+                                <div class="sb-sidenav-menu-heading">Laporan</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan" aria-expanded="false" aria-controls="laporan">
+                                  <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
+                                Laporan
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="laporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
                                     <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
                                     <a class="nav-link" href="admin/stok/view.php">Stok</a>
-                                </nav>
+                                </nav> 
                             </div>
                 </nav>
             </div>
