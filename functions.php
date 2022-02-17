@@ -20,14 +20,29 @@ function tambah_stok($pos){
     $kd_brg=htmlspecialchars($pos["kd_brg"]);
      $nama_barang=htmlspecialchars($pos["nama_barang"]);
     $qty=htmlspecialchars($pos["qty"]);
+    $pemasok=htmlspecialchars($pos["pemasok"]);
+    $kd_gudang=htmlspecialchars($pos["kd_gudang"]);
+    $satuan=htmlspecialchars($pos["satuan"]);
     
  
     $query="INSERT INTO stok 
             VALUES
-            ('','$kd_brg','$nama_barang','$qty')
+            ('','$kd_gudang','$pemasok','$satuan','$kd_brg','$nama_barang','$qty')
             ";
    mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
+}
+
+//insert gudang
+function tambah_gudang($pos){
+    global $conn;
+    $kd_gudang=htmlspecialchars($pos["kd_gudang"]);
+    $nama_gudang=htmlspecialchars($pos["nama_gudang"]);
+    $sql="INSERT INTO data_gudang
+            VALUES
+            ('','$kd_gudang','$nama_gudang')";
+            mysqli_query($conn,$sql);
+          return  mysqli_affected_rows($conn);
 }
 
 //insert tabel barang masuk
@@ -103,6 +118,12 @@ function hapus_keluar($id){
     return mysqli_affected_rows($conn);
 }
 
+function hapus_gudang($id){
+    global $conn;
+    mysqli_query($conn,"DELETE FROM data_gudang WHERE id_gudang=$id");
+    return mysqli_affected_rows($conn);
+}
+
 //update
 function update_masuk($pos){
 global $conn;
@@ -125,7 +146,13 @@ function update_stok($pos){
     global $conn;
     $nb=htmlspecialchars($pos["nama_barang"]);
     $jumlah=htmlspecialchars($pos["jumlah"]);
+     $pemasok=htmlspecialchars($pos["pemasok"]);
+    $kd_gudang=htmlspecialchars($pos["kd_gudang"]);
+    $satuan=htmlspecialchars($pos["satuan"]);
     $sql="UPDATE stok SET 
+            id_gudang='$kd_gudang',
+            id_pemasok='$pemasok',
+            id_satuan='$satuan',
            nama_barang='$nb',
            jumlah='$jumlah'
            WHERE id_barang=$id ";
@@ -145,5 +172,17 @@ function update_keluar($pos){
           WHERE id_bk=$id";
           mysqli_query($conn,$Sql);
           return mysqli_affected_rows($conn);
+}
+
+function update_gudang($pos){
+    global $conn;
+    $id=$pos["id_gudang"];
+    $nama_gudang=htmlspecialchars($pos["nama_gudang"]);
+    $sql="UPDATE data_gudang SET
+        nama_gudang='$nama_gudang'
+        WHERE id_gudang=$id
+        ";
+        mysqli_query($conn,$sql);
+        return mysqli_affected_rows($conn);
 }
  ?>

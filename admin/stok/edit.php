@@ -70,12 +70,12 @@ if(isset($_POST["update_stok"]) ){
             </ul>
         </nav>
         <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
+             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="../../index.php">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -87,10 +87,35 @@ if(isset($_POST["update_stok"]) ){
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="../barang masuk/view.php">Barang Masuk</a>
-                                    <a class="nav-link" href="../barang keluar/view.php">Barang Keluar</a>
-                                    <a class="nav-link" href="view.php">Stok</a>
-                                </nav>
+                                    <a class="nav-link" href="view.php">Barang</a> 
+                                    <a class="nav-link" href="../gudang/view.php">Gudang</a>
+                                    <a class="nav-link" href="../suplier/view.php">Suplier</a>
+                                     <a class="nav-link" href="../satuan/view.php">Satuan</a>
+                                    <a class="nav-link" href="../karyawan/view.php">Karyawan</a>
+                            </div>
+                              <div class="sb-sidenav-menu-heading">Transaksi</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-handshake"></i></div>
+                                Data Transaksi
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="transaksi" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
+                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
+                            </div>
+                                <div class="sb-sidenav-menu-heading">Laporan</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan" aria-expanded="false" aria-controls="laporan">
+                                  <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
+                                Laporan
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="laporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
+                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
+                                    <a class="nav-link" href="admin/stok/view.php">Stok</a>
+                                </nav> 
                             </div>
                 </nav>
             </div>
@@ -113,6 +138,39 @@ if(isset($_POST["update_stok"]) ){
                          <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Quantity</label>
                             <input type="number" class="form-control" id="exampleInputPassword1" name="jumlah" autocomplete="off" value="<?php echo $stok["jumlah"] ?>"> 
+                              <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label mt-2"">Nama Pemasok</label>
+                            <select name="pemasok" id="" class="form-control">
+                                <?php 
+                               $q=mysqli_query($conn,"SELECT * FROM pemasok");
+                               while($data=mysqli_fetch_assoc($q)){
+                                echo' <option  value=" '.$data["id_pemasok"] .' ">'.$data["nama_pemasok"].'</option> ';
+                               }
+                               ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label mt-2"">Kode Gudang</label>
+                            <select name="kd_gudang" id="" class="form-control">
+                                <?php 
+                               $q=mysqli_query($conn,"SELECT * FROM data_gudang");
+                               while($data=mysqli_fetch_assoc($q)){
+                                echo' <option  value=" '.$data["id_gudang"] .' ">'.$data["kd_gudang"].'</option> ';
+                               }
+                               ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label mt-2"">Satuan</label>
+                            <select name="satuan" id="" class="form-control">
+                                <?php 
+                               $q=mysqli_query($conn,"SELECT * FROM satuan");
+                               while($data=mysqli_fetch_assoc($q)){
+                                echo' <option  value=" '.$data["id_satuan"] .' ">'.$data["nama_satuan"].'</option> ';
+                               }
+                               ?>
+                            </select>
+                        </div>
                              <button type="submit" class="btn btn-primary mt-3" name="update_stok">Update</button>
                           </div>
                       </form>

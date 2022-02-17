@@ -1,10 +1,10 @@
 <?php 
 require'../../functions.php';
 //menampilkan tabel barang masuk
-$stok=tampil("SELECT * FROM stok INNER JOIN data_gudang ON stok.id_gudang=data_gudang.id_gudang INNER JOIN pemasok ON stok.id_pemasok=pemasok.id_pemasok INNER JOIN satuan ON stok.id_satuan=satuan.id_satuan");
+$stok=tampil("SELECT * FROM data_gudang");
 //codingan simpan data
 if(isset($_POST["simpan"]) ){
-    if(tambah_stok($_POST) > 0){
+    if(tambah_gudang($_POST) > 0){
         echo"
         <script>
                 alert('data berhasil di tambahkan');
@@ -18,7 +18,7 @@ if(isset($_POST["simpan"]) ){
          </script>
             ";
     }
-    var_dump($_POST["simpan"]);
+   
 }
 
 ?>
@@ -82,8 +82,8 @@ if(isset($_POST["simpan"]) ){
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="view.php">Barang</a> 
-                                    <a class="nav-link" href="../gudang/view.php">Gudang</a>
+                                    <a class="nav-link" href="../stok/view.php">Barang</a> 
+                                    <a class="nav-link" href="view.php">Gudang</a>
                                     <a class="nav-link" href="../suplier/view.php">Suplier</a>
                                      <a class="nav-link" href="../satuan/view.php">Satuan</a>
                                     <a class="nav-link" href="../karyawan/view.php">Karyawan</a>
@@ -117,14 +117,14 @@ if(isset($_POST["simpan"]) ){
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Table Stok Barang</h3>
+                        <h3 class="mt-4">Table Gudang</h3>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia magnam nisi, harum sed dolorem ducimus incidunt explicabo. Voluptate inventore, illum mollitia alias neque similique dolor, expedita cumque perferendis laborum quidem?</li>
                         </ol>
                          <div class="card mb-4">
                             <div class="card-header">
                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                               Tambah Barang
+                               Tambah Gudang
                                 </button>
                             </div>
                             <div class="card-body">
@@ -134,12 +134,8 @@ if(isset($_POST["simpan"]) ){
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                             <th>Kode Barang</th>
-                                            <th>Nama Barang</th>
-                                            <th>Quantity</th>
-                                            <th>Pemasok</th>
-                                            <th>Kode Gudang</th>
-                                            <th>Satuan</th>
+                                             <th>Kode Gudang</th>
+                                            <th>Nama Gudang</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -147,15 +143,11 @@ if(isset($_POST["simpan"]) ){
                                         <tr>   <?php $i=1; ?>
                                             <?php foreach($stok as $data): ?>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $data["kode_barang"]; ?></td>
-                                            <td><?php echo $data["nama_barang"]; ?></td>
-                                            <td><?php echo $data["jumlah"]; ?></td>
-                                            <td><?php echo $data["nama_pemasok"]; ?></td>
                                             <td><?php echo $data["kd_gudang"]; ?></td>
-                                            <td><?php echo $data["nama_satuan"]; ?></td>
+                                            <td><?php echo $data["nama_gudang"]; ?></td>
                                             <td> 
-                                            <a href="edit.php?id_barang=<?php echo $data["id_barang"] ?>"><button type="submit" name="edit" class="btn btn-warning">Edit</button> </a>
-                                            <a href="hapus.php?id_barang=<?php echo $data["id_barang"] ?>" onclick="return confirm('anda yakin untuk menghapus')
+                                            <a href="edit.php?id_gudang=<?php echo $data["id_gudang"] ?>"><button type="submit" name="edit" class="btn btn-warning">Edit</button> </a>
+                                            <a href="hapus.php?id_gudang=<?php echo $data["id_gudang"] ?>" onclick="return confirm('anda yakin untuk menghapus')
                                             "><button type="submit" name="hapus" class="btn btn-danger">Hapus</button> </a>
                                         </td>
                                             
@@ -191,7 +183,7 @@ if(isset($_POST["simpan"]) ){
                     <!-- membuat codingan kode barang otomatis -->
                     <?php                            
                                     // mengambil data barang dengan kode paling besar
-                                    $query = mysqli_query($conn, "SELECT max(kode_barang) as kodeTerbesar FROM stok");
+                                    $query = mysqli_query($conn, "SELECT max(kd_gudang) as kodeTerbesar FROM data_gudang");
                                     $data = mysqli_fetch_array($query);
                                     $kodeBarang = $data['kodeTerbesar'];
                                     
@@ -206,49 +198,15 @@ if(isset($_POST["simpan"]) ){
                                     // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
                                     // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
                                     // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
-                                    $huruf = "KDB";
+                                    $huruf = "GD";
                                     $kodeBarang = $huruf . sprintf("%03s", $urutan);
                       ?>
                      <form action="" method="post">
-                         <label for="exampleFormControlInput1" class="form-label">Kode Barang</label>
-                          <input type="text" class="form-control" id="exampleFormControlInput1" name="kd_brg"  readonly value="<?php echo $kodeBarang ?> " autocomplete="off" required>
-                        <label for="exampleFormControlInput1" class="form-label mt-2">Nama Barang</label>
-                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_barang" autocomplete="off">
-                          <label for="exampleFormControlInput1" class="form-label mt-2"">Quantity</label>
-                         <input type="number" class="form-control" id="exampleFormControlInput1" name="qty">
-                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Nama Pemasok</label>
-                            <select name="pemasok" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM pemasok");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_pemasok"] .' ">'.$data["nama_pemasok"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Kode Gudang</label>
-                            <select name="kd_gudang" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM data_gudang");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_gudang"] .' ">'.$data["kd_gudang"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Satuan</label>
-                            <select name="satuan" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM satuan");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_satuan"] .' ">'.$data["nama_satuan"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
+                         <label for="exampleFormControlInput1" class="form-label">Kode Gudang</label>
+                          <input type="text" class="form-control" id="exampleFormControlInput1" name="kd_gudang"  readonly value="<?php echo $kodeBarang ?> " autocomplete="off" required>
+                        <label for="exampleFormControlInput1" class="form-label mt-2">Nama Gudang</label>
+                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_gudang" autocomplete="off">
+                         
                         <button type="submit" class="btn btn-primary mt-3" name="simpan">Simpan</button>
                       </form>    
                 </div>
