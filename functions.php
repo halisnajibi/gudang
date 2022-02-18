@@ -59,6 +59,35 @@ function tambah_pemasok($pos){
             return mysqli_affected_rows($conn);
 }
 
+//insert satuan
+function tambah_satuan($pos){
+    global $conn;
+    $kd=$pos["kd_satuan"];
+    $nama=htmlspecialchars($pos["nama_satuan"]);
+
+    $sql="INSERT INTO satuan
+            VALUES
+            ('','$kd','$nama')";
+            mysqli_query($conn,$sql);
+            return mysqli_affected_rows($conn);
+}
+
+//insert karyawan
+function tambah_karyawan($pos){
+    global $conn;
+    $kd=$pos["kd_karyawan"];
+    $nama=htmlspecialchars($pos["nama_karyawan"]);
+    $email=htmlspecialchars($pos["email"]);
+    $telepon=htmlspecialchars($pos["telepon"]);
+    $alamat=htmlspecialchars($pos["alamat"]);
+
+    $sql="INSERT INTO karyawan
+            VALUES
+            ('','$kd','$nama','$email','$telepon','$alamat')";
+            mysqli_query($conn,$sql);
+            return mysqli_affected_rows($conn);
+}
+
 //insert tabel barang masuk
 function barang_masuk($pos){
     global $conn;
@@ -144,6 +173,18 @@ mysqli_query($conn,"DELETE FROM pemasok WHERE id_pemasok=$id");
 return mysqli_affected_rows($conn);
 }
 
+function hapus_satuan($id){
+    global $conn;
+    mysqli_query($conn,"DELETE FROM satuan WHERE id_satuan=$id");
+  return  mysqli_affected_rows($conn);
+}
+
+function hapus_karyawan($id){
+    global $conn;
+    mysqli_query($conn,"DELETE from karyawan WHERE id_karyawan=$id");
+    return mysqli_affected_rows($conn);
+}
+
 //update
 function update_masuk($pos){
 global $conn;
@@ -218,6 +259,24 @@ function update_pemasok($pos){
             telepon_pemasok='$telepon',
             alamat_pemasok='$alamat'
             WHERE id_pemasok=$id";
+            mysqli_query($conn,$sql);
+            return mysqli_affected_rows($conn);
+}
+
+function update_karyawan($pos){
+    global $conn;
+    $id=$pos["id_karyawan"];
+    $nama=htmlspecialchars($pos["nama_karyawan"]);
+    $email=htmlspecialchars($pos["email"]);
+    $telepon=htmlspecialchars($pos["telepon"]);
+    $alamat=htmlspecialchars($pos["alamat"]);
+
+    $sql="UPDATE karyawan SET
+            nama_karyawan='$nama',
+            email='$email',
+            telepon='$telepon',
+            alamat='$alamat'
+            WHERE id_karyawan=$id";
             mysqli_query($conn,$sql);
             return mysqli_affected_rows($conn);
 }

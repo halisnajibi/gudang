@@ -206,8 +206,15 @@ if(isset($_POST["submit_masuk"]) ){
          <script src="../../assets/datatable/datatables.min.js"></script>
         <script>
             $(document).ready( function () {
-             $('#data_tabel').DataTable();
+             $('#data_tabel').DataTable({
+                 lengthMenu:[
+                 [5,10,25,50,100,-1],
+                 [5,10,25,50,100,"ALL"]
+             ]
+             } );
+            
             } );
         </script>
+       
     </body>
 </html>
