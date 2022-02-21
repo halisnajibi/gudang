@@ -75,7 +75,7 @@ if(isset($_POST["update_gudang"]) ){
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="../../index.php">
+                           <a class="nav-link" href="../../index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -87,12 +87,11 @@ if(isset($_POST["update_gudang"]) ){
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                  <a class="nav-link" href="../stok/view.php">Barang</a> 
+                                    <a class="nav-link" href="../stok/view.php">Barang</a> 
                                     <a class="nav-link" href="view.php">Gudang</a>
                                     <a class="nav-link" href="../suplier/view.php">Suplier</a>
                                      <a class="nav-link" href="../satuan/view.php">Satuan</a>
                                     <a class="nav-link" href="../karyawan/view.php">Karyawan</a>
-                                </nav>
                             </div>
                 </nav>
             </div>

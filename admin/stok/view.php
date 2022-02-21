@@ -37,6 +37,10 @@ if(isset($_POST["simpan"]) ){
         <link rel="stylesheet" href="../../assets/fontawesome-free/css/all.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+       <link rel="stylesheet" href="../../assets/datatable/datatables.min.css">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+       <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+       <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css">
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -70,7 +74,7 @@ if(isset($_POST["simpan"]) ){
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.php">
+                           <a class="nav-link" href="../../index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -87,30 +91,6 @@ if(isset($_POST["simpan"]) ){
                                     <a class="nav-link" href="../suplier/view.php">Suplier</a>
                                      <a class="nav-link" href="../satuan/view.php">Satuan</a>
                                     <a class="nav-link" href="../karyawan/view.php">Karyawan</a>
-                            </div>
-                              <div class="sb-sidenav-menu-heading">Transaksi</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-handshake"></i></div>
-                                Data Transaksi
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="transaksi" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
-                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
-                            </div>
-                                <div class="sb-sidenav-menu-heading">Laporan</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan" aria-expanded="false" aria-controls="laporan">
-                                  <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
-                                Laporan
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="laporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
-                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
-                                    <a class="nav-link" href="admin/stok/view.php">Stok</a>
-                                </nav> 
                             </div>
                 </nav>
             </div>
@@ -130,7 +110,7 @@ if(isset($_POST["simpan"]) ){
                             <div class="card-body">
                         <!-- codingan tampil data -->
                       
-                                <table id="datatablesSimple" class="table table-striped" >
+                                <table id="data_tabel" class="table table-striped" >
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -144,8 +124,9 @@ if(isset($_POST["simpan"]) ){
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>   <?php $i=1; ?>
+                                        <?php $i=1; ?>
                                             <?php foreach($stok as $data): ?>
+                                        <tr>   
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $data["kode_barang"]; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
@@ -259,14 +240,43 @@ if(isset($_POST["simpan"]) ){
             </div>
             </div>
         <!-- akhir modal -->
+       <script src="../../assets/datatable/jquery.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../../js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../../assets/demo/chart-area-demo.js"></script>
-        <script src="../../assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../../js/datatables-simple-demo.js"></script>
-       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+         <script src="../../assets/datatable/datatables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="
+        https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"></script>
+        <script>
+                    $(document).ready(function() {
+                var table = $('#data_tabel').DataTable( {
+                    buttons: [ 'copy', 'excel', 'pdf' ],
+                   lengthMenu:[
+                        [5,10,25,50,100,-1],
+                        [5,10,25,50,100,"ALL"]
+                    ]
+                } );
+                table.buttons().container()
+                    .appendTo( '#data_tabel_wrapper .col-md-6:eq(0)' );
+            } );
+        </script>
+        <!-- <script>
+                    $(document).ready(function() {
+            $('#data_tabel').DataTable( {
+                "order": [[ 3, "desc" ]],
+                lengthMenu:[
+                        [5,10,25,50,100,-1],
+                        [5,10,25,50,100,"ALL"]
+                    ]
+            } );
+        } );
+        </script> -->
 
     </body>
     <!-- <script>

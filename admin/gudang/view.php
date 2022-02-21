@@ -70,7 +70,7 @@ if(isset($_POST["simpan"]) ){
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.php">
+                           <a class="nav-link" href="../../index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -87,30 +87,6 @@ if(isset($_POST["simpan"]) ){
                                     <a class="nav-link" href="../suplier/view.php">Suplier</a>
                                      <a class="nav-link" href="../satuan/view.php">Satuan</a>
                                     <a class="nav-link" href="../karyawan/view.php">Karyawan</a>
-                            </div>
-                              <div class="sb-sidenav-menu-heading">Transaksi</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-handshake"></i></div>
-                                Data Transaksi
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="transaksi" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
-                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
-                            </div>
-                                <div class="sb-sidenav-menu-heading">Laporan</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan" aria-expanded="false" aria-controls="laporan">
-                                  <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
-                                Laporan
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="laporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
-                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
-                                    <a class="nav-link" href="admin/stok/view.php">Stok</a>
-                                </nav> 
                             </div>
                 </nav>
             </div>

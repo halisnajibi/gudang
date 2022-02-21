@@ -66,7 +66,7 @@ if(isset($_POST["update_keluar"]) ){
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
@@ -74,18 +74,17 @@ if(isset($_POST["update_keluar"]) ){
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <div class="sb-sidenav-menu-heading">master data</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Tables
+                            <div class="sb-sidenav-menu-heading">Transaksi</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-dollar-sign"></i>
+                                </div>
+                                Data Transaksi
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="transaksi" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="../barang masuk/view.php">Barang Masuk</a>
-                                    <a class="nav-link" href="../barang keluar/view.php">Barang Keluar</a>
-                                    <a class="nav-link" href="view.php">Stok</a>
-                                </nav>
+                                    <a class="nav-link" href="view.php">Barang Keluar</a>
                             </div>
                 </nav>
             </div>
@@ -100,6 +99,15 @@ if(isset($_POST["update_keluar"]) ){
                             <div class="card-body">
                                <form action="" method="post">
                                     <input type="hidden" name="id_bk" value="<?php echo $bk["id_bk"];?>">
+                                     <label for="exampleInputEmail1" class="form-label">Nama Karyawan</label>
+                            <select name="karyawan" id="" class="form-control">
+                                <?php 
+                               $q=mysqli_query($conn,"SELECT * FROM karyawan");
+                               while($data=mysqli_fetch_assoc($q)){
+                                echo' <option  value=" '.$data["id_karyawan"] .' ">'.$data["nama_karyawan"].'</option> ';
+                               }
+                               ?>
+                            </select>
                        <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Penerima</label>
                             <input type="text" class="form-control" id="exampleInputPassword1" name="penerima" autocomplete="off" value="<?php echo $bk["penerima"] ?>"> 

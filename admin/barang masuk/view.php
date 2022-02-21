@@ -1,7 +1,7 @@
 <?php 
 require'../../functions.php';
 //menampilkan tabel barang masuk
-$bm=tampil("SELECT * FROM brg_masuk,stok WHERE brg_masuk.id_barang=stok.id_barang");
+$bm=tampil("SELECT * FROM brg_masuk INNER JOIN stok ON brg_masuk.id_barang=stok.id_barang INNER JOIN karyawan ON brg_masuk.id_karyawan=karyawan.id_karyawan");
 //codingan simpan data
 if(isset($_POST["submit_masuk"]) ){
     if(barang_masuk($_POST) > 0){
@@ -36,6 +36,7 @@ if(isset($_POST["submit_masuk"]) ){
         <link rel="stylesheet" href="../../assets/datatable/datatables.min.css">
         <link href="../../css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../../assets/fontawesome-free-6.0.0-web/css/all.min.css">
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -73,18 +74,17 @@ if(isset($_POST["submit_masuk"]) ){
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <div class="sb-sidenav-menu-heading">master data</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Tables
+                            <div class="sb-sidenav-menu-heading">Transaksi</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-dollar-sign"></i>
+                                </div>
+                                Data Transaksi
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="transaksi" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="view.php">Barang Masuk</a>
                                     <a class="nav-link" href="../barang keluar/view.php">Barang Keluar</a>
-                                    <a class="nav-link" href="../stok/view.php">Stok</a>
-                                </nav>
                             </div>
                 </nav>
             </div>
@@ -108,9 +108,11 @@ if(isset($_POST["submit_masuk"]) ){
                                 <thead>
                                     <tr>
                                         <th>no</th>
+                                        <th>kode transaksi</th>
                                         <th>nama barang</th>
                                         <th>tanggal</th>
                                          <th>quantity</th>
+                                         <th>nama karyawan</th>
                                         <th>keterangan</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -120,9 +122,11 @@ if(isset($_POST["submit_masuk"]) ){
                                  <?php foreach($bm as $data): ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
+                                            <td><?php echo $data["kd_bm"]; ?></td>
                                             <td><?php echo $data["nama_barang"]; ?></td>
                                             <td><?php echo $data["tanggal"]; ?></td>
                                             <td><?php echo $data["qty_masuk"]; ?></td>
+                                             <td><?php echo $data["nama_karyawan"]; ?></td>
                                             <td><?php echo $data["keterangan_masuk"]; ?></td>
                                             <td>
                                                 <a href="edit.php?id_bm=<?php echo $data["id_bm"]; ?>"><button type="submit" name="edit" class="btn btn-warning">Edit</button></a>
@@ -157,7 +161,30 @@ if(isset($_POST["submit_masuk"]) ){
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                   <!-- membuat codingan kode barang otomatis -->
+                    <?php                            
+                                    // mengambil data barang dengan kode paling besar
+                                    $query = mysqli_query($conn, "SELECT max(kd_bm) as kodeTerbesar FROM brg_masuk");
+                                    $data = mysqli_fetch_array($query);
+                                    $kodeBarang = $data['kodeTerbesar'];
+                                    
+                                    // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+                                    // dan diubah ke integer dengan (int)
+                                    $urutan = (int) substr($kodeBarang, 3, 3);
+                                    
+                                    // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+                                    $urutan++;
+                                    
+                                    // membentuk kode barang baru
+                                    // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+                                    // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+                                    // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+                                    $huruf = "BM";
+                                    $kodeBarang = $huruf . sprintf("%03s", $urutan);
+                      ?>
                      <form action="" method="post">
+                         <label for="exampleFormControlInput1" class="form-label">Kode Transaksi</label>
+                          <input type="text" class="form-control" id="exampleFormControlInput1" name="kd_bm"  readonly value="<?php echo $kodeBarang ?> " autocomplete="off" required>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
                             <select name="brg_masuk" id="" class="form-control">
@@ -173,12 +200,21 @@ if(isset($_POST["submit_masuk"]) ){
                              <label for="exampleInputPassword1" class="form-label">Quantity</label>
                             <input type="number" class="form-control" id="exampleInputPassword1" name="qty_masuk"> 
                         </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nama Karyawan</label>
+                            <select name="karyawan" id="" class="form-control">
+                                <?php 
+                               $q=mysqli_query($conn,"SELECT * FROM karyawan");
+                               while($data=mysqli_fetch_assoc($q)){
+                                echo' <option  value=" '.$data["id_karyawan"] .' ">'.$data["nama_karyawan"].'</option> ';
+                               }
+                               ?>
+                            </select>
+                        </div>
                          <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Keterangan</label>
                             <input type="text" class="form-control" id="exampleInputPassword1" name="keterangan_masuk" autocomplete="off"> 
                              <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
-                         
                         </div>
                              <button type="submit" class="btn btn-primary mt-3" name="submit_masuk">Simpan</button>
                           </div>

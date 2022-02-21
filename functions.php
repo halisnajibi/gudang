@@ -94,10 +94,11 @@ function barang_masuk($pos){
     $nb=htmlspecialchars($pos["brg_masuk"]);
     $qty=htmlspecialchars($pos["qty_masuk"]);
     $ket=htmlspecialchars($pos["keterangan_masuk"]);
-
+    $karyawan=htmlspecialchars($pos["karyawan"]);
+    $kd_bm=$pos["kd_bm"];
     $query="INSERT INTO brg_masuk
             VALUES
-            ('','$nb',current_timestamp(),'$qty','$ket')";  
+            ('','$karyawan','$kd_bm','$nb',current_timestamp(),'$qty','$ket')";  
      mysqli_query($conn,$query);
 
 //cek stok sekarang
@@ -116,14 +117,16 @@ $tambah=$stok_sekarang + $qty;
 //insert barang keluar
 function barang_keluar($pos){
     global $conn;
+    $kd=$pos["kd_transaksi"];
     $nama_brg=htmlspecialchars($pos["brg_keluar"]);
     $qty_keluar=htmlspecialchars($pos["qty_keluar"]);
     $penerima=htmlspecialchars($pos["penerima"]);
+$nk=htmlspecialchars($pos["karyawan"]);
     $keterangan_keluar=htmlspecialchars($pos["keterangan_keluar"]);
 
     $query="INSERT INTO brg_keluar
             VALUES
-            ('','$nama_brg',current_timestamp(),'$qty_keluar','$penerima','$keterangan_keluar')";  
+            ('','$kd','$nama_brg','$nk',current_timestamp(),'$qty_keluar','$penerima','$keterangan_keluar')";  
      mysqli_query($conn,$query);
 //cek stok sekarang
 $semua_data=mysqli_query($conn,"SELECT * FROM stok WHERE id_barang='$nama_brg'");
@@ -189,12 +192,12 @@ function hapus_karyawan($id){
 function update_masuk($pos){
 global $conn;
 $id=$pos["id_bm"];
+$nk=htmlspecialchars($pos["karyawan"]);
 $ket=htmlspecialchars($pos["keterangan_masuk"]);
 
 $sql="UPDATE brg_masuk SET
-        
+        id_karyawan='$nk',
         tanggal=current_timestamp(),
-      
         keterangan_masuk='$ket'
         WHERE id_bm=$id
         ";
@@ -224,10 +227,12 @@ function update_stok($pos){
 function update_keluar($pos){
     global $conn;
     $id=$pos["id_bk"];
+    $nk=$pos["karyawan"];
     $penerima=$pos["penerima"];
     $ket=$pos["keterangan_keluar"];
 
     $Sql="UPDATE brg_keluar SET
+            id_karyawan='$nk',
           penerima='$penerima',
           keterangan_keluar='$ket'
           WHERE id_bk=$id";

@@ -65,10 +65,12 @@ require'functions.php';
                                     <a class="nav-link" href="admin/suplier/view.php">Suplier</a>
                                      <a class="nav-link" href="admin/satuan/view.php">Satuan</a>
                                     <a class="nav-link" href="admin/karyawan/view.php">Karyawan</a>
+                                </nav>
                             </div>
                               <div class="sb-sidenav-menu-heading">Transaksi</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-handshake"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-dollar-sign"></i>
+                                </div>
                                 Data Transaksi
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -78,9 +80,24 @@ require'functions.php';
                                     <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
                             </div>
                                 <div class="sb-sidenav-menu-heading">Laporan</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan_master" aria-expanded="false" aria-controls="laporan_master">
+                                  <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
+                                Laporan Master Data
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="laporan_master" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="admin/stok/view-print.php">Barang</a> 
+                                    <a class="nav-link" href="admin/gudang/view.php">Gudang</a>
+                                    <a class="nav-link" href="admin/suplier/view.php">Suplier</a>
+                                     <a class="nav-link" href="admin/satuan/view.php">Satuan</a>
+                                    <a class="nav-link" href="admin/karyawan/view.php">Karyawan</a>
+                                </nav>
+                            </div>
+                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan" aria-expanded="false" aria-controls="laporan">
                                   <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
-                                Laporan
+                                Laporan Transaksi
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="laporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -96,6 +113,7 @@ require'functions.php';
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Dashboard</h1>
+                      <i class="fa-solid fa-books"></i>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
