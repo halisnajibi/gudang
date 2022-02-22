@@ -10,7 +10,7 @@ require'../../functions.php';
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - SB Admin</title>
+        <title>Login</title>
         <link href="../../css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
@@ -26,8 +26,8 @@ require'../../functions.php';
                                     <div class="card-body">
                                         <form method="post">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="email" />
-                                                <label for="inputEmail">Email address</label>
+                                                <input class="form-control" id="inputEmail" type="text" name="username" placeholder="Username" autocomplete="off"/>
+                                                <label for="inputEmail">Unsername</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputPassword" type="password" placeholder="Password" name="pw" />
