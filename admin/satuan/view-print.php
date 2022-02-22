@@ -1,10 +1,10 @@
 <?php 
 require'../../functions.php';
 //menampilkan tabel barang masuk
-$stok=tampil("SELECT * FROM stok INNER JOIN data_gudang ON stok.id_gudang=data_gudang.id_gudang INNER JOIN pemasok ON stok.id_pemasok=pemasok.id_pemasok INNER JOIN satuan ON stok.id_satuan=satuan.id_satuan");
+$stok=tampil("SELECT * FROM satuan");
 //codingan simpan data
 if(isset($_POST["simpan"]) ){
-    if(tambah_stok($_POST) > 0){
+    if(tambah_satuan($_POST) > 0){
         echo"
         <script>
                 alert('data berhasil di tambahkan');
@@ -37,7 +37,8 @@ if(isset($_POST["simpan"]) ){
         <link rel="stylesheet" href="../../assets/fontawesome-free/css/all.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-       <link rel="stylesheet" href="../../assets/datatable/datatables.min.css">
+       <link rel="stylesheet" href="../../assets/fontawesome-free-6.0.0-web/css/all.min.css">
+        <link rel="stylesheet" href="../../assets/datatable/datatables.min.css">
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css">
@@ -71,7 +72,7 @@ if(isset($_POST["simpan"]) ){
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
@@ -87,28 +88,29 @@ if(isset($_POST["simpan"]) ){
                             </a>
                             <div class="collapse" id="laporan_master" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="view-print.php">Barang</a> 
+                                    <a class="nav-link" href="../stok/view-print.php">Barang</a> 
                                     <a class="nav-link" href="../gudang/view-print.php">Gudang</a>
                                     <a class="nav-link" href="../suplier/view-print.php">Suplier</a>
-                                     <a class="nav-link" href="../satuan/view-print.php">Satuan</a>
+                                     <a class="nav-link" href="view-print.php">Satuan</a>
                                     <a class="nav-link" href="../karyawan/view-print.php">Karyawan</a>
                                 </nav>
-                            </div>
+          
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Laporan Barang</h3>
+                        <h3 class="mt-4">Laporan Satuan Barang</h3>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia magnam nisi, harum sed dolorem ducimus incidunt explicabo. Voluptate inventore, illum mollitia alias neque similique dolor, expedita cumque perferendis laborum quidem?</li>
                         </ol>
                          <div class="card mb-4">
                             <div class="card-header">
-                                <a href="cetak.php"> <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                               Print
-                                </button></a>
-                              
+                                <a href="cetak.php">
+                               <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                             Print
+                                </button>
+                                </a>
                             </div>
                             <div class="card-body">
                         <!-- codingan tampil data -->
@@ -117,24 +119,16 @@ if(isset($_POST["simpan"]) ){
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                             <th>Kode Barang</th>
-                                            <th>Nama Barang</th>
-                                            <th>Quantity</th>
-                                            <th>Pemasok</th>
-                                            <th>Kode Gudang</th>
-                                            <th>Satuan</th>
+                                            <th>Kode Satuan</th>
+                                            <th>Nama Satuan</th>
+                                         
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $i=1; ?>
+                                        <tr>   <?php $i=1; ?>
                                             <?php foreach($stok as $data): ?>
-                                        <tr>   
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $data["kode_barang"]; ?></td>
-                                            <td><?php echo $data["nama_barang"]; ?></td>
-                                            <td><?php echo $data["jumlah"]; ?></td>
-                                            <td><?php echo $data["nama_pemasok"]; ?></td>
-                                            <td><?php echo $data["kd_gudang"]; ?></td>
+                                            <td><?php echo $data["kd_satuan"] ;?></td>
                                             <td><?php echo $data["nama_satuan"]; ?></td>
                                         </tr>
                                       <?php $i++; ?>
@@ -168,7 +162,7 @@ if(isset($_POST["simpan"]) ){
                     <!-- membuat codingan kode barang otomatis -->
                     <?php                            
                                     // mengambil data barang dengan kode paling besar
-                                    $query = mysqli_query($conn, "SELECT max(kode_barang) as kodeTerbesar FROM stok");
+                                    $query = mysqli_query($conn, "SELECT max(kd_satuan) as kodeTerbesar FROM satuan");
                                     $data = mysqli_fetch_array($query);
                                     $kodeBarang = $data['kodeTerbesar'];
                                     
@@ -183,49 +177,14 @@ if(isset($_POST["simpan"]) ){
                                     // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
                                     // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
                                     // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
-                                    $huruf = "KDB";
+                                    $huruf = "S";
                                     $kodeBarang = $huruf . sprintf("%03s", $urutan);
                       ?>
                      <form action="" method="post">
-                         <label for="exampleFormControlInput1" class="form-label">Kode Barang</label>
-                          <input type="text" class="form-control" id="exampleFormControlInput1" name="kd_brg"  readonly value="<?php echo $kodeBarang ?> " autocomplete="off" required>
-                        <label for="exampleFormControlInput1" class="form-label mt-2">Nama Barang</label>
-                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_barang" autocomplete="off">
-                          <label for="exampleFormControlInput1" class="form-label mt-2"">Quantity</label>
-                         <input type="number" class="form-control" id="exampleFormControlInput1" name="qty">
-                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Nama Pemasok</label>
-                            <select name="pemasok" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM pemasok");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_pemasok"] .' ">'.$data["nama_pemasok"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Kode Gudang</label>
-                            <select name="kd_gudang" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM data_gudang");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_gudang"] .' ">'.$data["kd_gudang"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Satuan</label>
-                            <select name="satuan" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM satuan");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_satuan"] .' ">'.$data["nama_satuan"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
+                         <label for="exampleFormControlInput1" class="form-label">Kode Pemasok</label>
+                          <input type="text" class="form-control" id="exampleFormControlInput1" name="kd_satuan"  readonly value="<?php echo $kodeBarang ?> " autocomplete="off" required>
+                        <label for="exampleFormControlInput1" class="form-label mt-2">Nama Satuan</label>
+                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_satuan" autocomplete="off" required>
                         <button type="submit" class="btn btn-primary mt-3" name="simpan">Simpan</button>
                       </form>    
                 </div>
@@ -235,8 +194,7 @@ if(isset($_POST["simpan"]) ){
                 </div>
             </div>
             </div>
-        <!-- akhir modal -->
-       <script src="../../assets/datatable/jquery.js"></script>
+          <script src="../../assets/datatable/jquery.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../../js/scripts.js"></script>
          <script src="../../assets/datatable/datatables.min.js"></script>
@@ -262,35 +220,7 @@ if(isset($_POST["simpan"]) ){
                     .appendTo( '#data_tabel_wrapper .col-md-6:eq(0)' );
             } );
         </script>
-        <!-- <script>
-                    $(document).ready(function() {
-            $('#data_tabel').DataTable( {
-                "order": [[ 3, "desc" ]],
-                lengthMenu:[
-                        [5,10,25,50,100,-1],
-                        [5,10,25,50,100,"ALL"]
-                    ]
-            } );
-        } );
-        </script> -->
 
     </body>
-    <!-- <script>
-            swal({
-  title: "Yakin Untuk Menghapus?",
-  text: "Data Yang Anda Delete Tidak Bisa Di Pulihkan Lagi!",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("Berhasil,Data Terhapus!", {
-      icon: "success",
-    });
-  } else {
-    swal("Anda Gagal Menghapus Data!");
-  }
-})
-    </script> -->
+   
 </html>
