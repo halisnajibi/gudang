@@ -18,7 +18,7 @@ if(isset($_POST["simpan"]) ){
          </script>
             ";
     }
-    var_dump($_POST["simpan"]);
+
 }
 
 ?>

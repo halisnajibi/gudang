@@ -1,4 +1,8 @@
 <?php 
+session_start();
+if(!isset($_SESSION["username"])){
+      header("location:admin/login/login.php");
+}
 require'functions.php';
 $jumlah=mysqli_query($conn,"SELECT * FROM stok");
 $barang=mysqli_num_rows($jumlah);

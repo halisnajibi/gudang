@@ -1,5 +1,40 @@
 <?php 
+session_start();
+if(isset($_SESSION["username"])){
+      header("location:../../index.php");
+}
 require'../../functions.php';
+
+$username="";
+$password="";
+$err="";
+if(isset($_POST["login"])){
+    $username=$_POST["username"];
+    $password=$_POST["pw"];
+
+    //cek apakah username dan pw sudah di isi
+    if($username == '' OR $password == ''){
+        $err = "silahkan masukan username dan password !!";
+    }
+
+    //cek apakah form username dan pw sudah cocok dengan db
+    if(empty($err)){
+        $sql1="SELECT * FROM login WHERE username='$username'";
+        $q1=mysqli_query($conn,$sql1);
+        $r1=mysqli_fetch_assoc($q1);
+
+        if($r1["pass"] != $password){
+            $err = "akun tidak ditemukan !!";
+        }
+    }
+
+    //kalo cocok pindahkan
+    if(empty($err)){
+        $_SESSION["username"]= $username;
+        echo "login berhasil";
+       header("location:../../index.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +48,15 @@ require'../../functions.php';
         <title>Login</title>
         <link href="../../css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+            p{
+                font-weight: bold;
+                font-size: 13px;
+                margin-left: 20px;
+                margin-top: 20px;
+                color: red;
+            }
+        </style>
     </head>
     <body class="bg-primary">
         <div id="layoutAuthentication">
@@ -23,6 +67,14 @@ require'../../functions.php';
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <p class="pesan">
+                                         <?php 
+                                        if($err){
+                                            echo $err;
+                                        }
+                                    ?>
+                                    </p>
+                                   
                                     <div class="card-body">
                                         <form method="post">
                                             <div class="form-floating mb-3">
@@ -39,7 +91,8 @@ require'../../functions.php';
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" href="password.html">Forgot Password?</a>
-                                                <a class="btn btn-primary" href="index.html">Login</a>
+                                               
+                                                <button type="submit" name="login" class="btn btn-primary">Login</button>
                                             </div>
                                         </form>
                                     </div>
