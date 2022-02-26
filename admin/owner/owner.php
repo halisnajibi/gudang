@@ -3,7 +3,7 @@ session_start();
 if(!isset($_SESSION["username"])){
       header("location:admin/login/login.php");
 }
-require'functions.php';
+require'../../functions.php';
 $jumlah=mysqli_query($conn,"SELECT * FROM stok");
 $barang=mysqli_num_rows($jumlah);
 $jumlah=mysqli_query($conn,"SELECT * FROM data_gudang");
@@ -30,9 +30,9 @@ $bm=mysqli_num_rows($jumlah);
         <meta name="author" content="" />
         <title>Dashboard - GUDANG Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../../css/styles.css" rel="stylesheet" />
         <!-- <link rel="stylesheet" href="css/sb-admin-2.min.css"> -->
-        <link rel="stylesheet" href="assets/fontawesome-free-6.0.0-web/css/all.min.css">  
+        <link rel="stylesheet" href="../../assets/fontawesome-free-6.0.0-web/css/all.min.css">  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -67,37 +67,10 @@ $bm=mysqli_num_rows($jumlah);
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="owner.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <div class="sb-sidenav-menu-heading">master data</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Tables
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin/stok/view.php">Barang</a> 
-                                    <a class="nav-link" href="admin/gudang/view.php">Gudang</a>
-                                    <a class="nav-link" href="admin/suplier/view.php">Suplier</a>
-                                     <a class="nav-link" href="admin/satuan/view.php">Satuan</a>
-                                    <a class="nav-link" href="admin/karyawan/view.php">Karyawan</a>
-                                </nav>
-                            </div>
-                              <div class="sb-sidenav-menu-heading">Transaksi</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-expanded="false" aria-controls="transaksi">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-dollar-sign"></i>
-                                </div>
-                                Data Transaksi
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="transaksi" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin/barang masuk/view.php">Barang Masuk</a>
-                                    <a class="nav-link" href="admin/barang keluar/view.php">Barang Keluar</a>
-                            </div>
                                 <div class="sb-sidenav-menu-heading">Laporan</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan_master" aria-expanded="false" aria-controls="laporan_master">
                                   <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
@@ -106,7 +79,7 @@ $bm=mysqli_num_rows($jumlah);
                             </a>
                             <div class="collapse" id="laporan_master" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin/stok/view-print.php">Barang</a> 
+                                    <a class="nav-link" href="barang_view.php">Barang</a> 
                                     <a class="nav-link" href="admin/gudang/view-print.php">Gudang</a>
                                     <a class="nav-link" href="admin/suplier/view-print.php">Suplier</a>
                                      <a class="nav-link" href="admin/satuan/view-print.php">Satuan</a>
@@ -131,7 +104,7 @@ $bm=mysqli_num_rows($jumlah);
             <div id="layoutSidenav_content">
                 <main>
                       <div class="container-fluid">
-                        <h3 class="mt-3 mb-3">Selamat Datang Admin</h3>
+                        <h1>Selamat Datang </h1>
                     <!-- Content Row -->
                     <div class="row">
 
@@ -272,7 +245,7 @@ $bm=mysqli_num_rows($jumlah);
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; HN Gudang 2022</div>
+                            <div class="text-muted">Copyright &copy; Your Website 2022</div>
                            
                         </div>
                     </div>
@@ -282,9 +255,9 @@ $bm=mysqli_num_rows($jumlah);
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="../../assets/demo/chart-area-demo.js"></script>
+        <script src="../../assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="../../js/datatables-simple-demo.js"></script>
     </body>
 </html>

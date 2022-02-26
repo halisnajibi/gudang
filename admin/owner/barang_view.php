@@ -7,10 +7,13 @@ if(isset($_POST["simpan"]) ){
     if(tambah_stok($_POST) > 0){
        echo "
        <script>
-                   alert('data berhasill di tambahkan');
-                document.location.href='view.php';
+       Swal.fire(
+  'Good job!',
+  'You clicked the button!',
+  'success'
+)
        </script>
-      ";
+       ";
     }else{
         echo"
         <script>
@@ -42,12 +45,13 @@ if(isset($_POST["simpan"]) ){
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css">
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+             <link rel="stylesheet" href="../../assets/fontawesome-free-6.0.0-web/css/all.min.css"> 
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">gudang kita</a>
+            <a class="navbar-brand ps-3" href="index.html">HN Gudang</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -76,23 +80,37 @@ if(isset($_POST["simpan"]) ){
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                           <a class="nav-link" href="../../index.php">
+                           <a class="nav-link" href="owner.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <div class="sb-sidenav-menu-heading">master data</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Tables
+                                    <div class="sb-sidenav-menu-heading">Laporan</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan_master" aria-expanded="false" aria-controls="laporan_master">
+                                  <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
+                                Laporan Master Data
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="laporan_master" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="view.php">Barang</a> 
-                                    <a class="nav-link" href="../gudang/view.php">Gudang</a>
-                                    <a class="nav-link" href="../suplier/view.php">Suplier</a>
-                                     <a class="nav-link" href="../satuan/view.php">Satuan</a>
-                                    <a class="nav-link" href="../karyawan/view.php">Karyawan</a>
+                                    <a class="nav-link" href="barang_view.php">Barang</a> 
+                                    <a class="nav-link" href="admin/gudang/view-print.php">Gudang</a>
+                                    <a class="nav-link" href="admin/suplier/view-print.php">Suplier</a>
+                                     <a class="nav-link" href="admin/satuan/view-print.php">Satuan</a>
+                                    <a class="nav-link" href="admin/karyawan/view-print.php">Karyawan</a>
+                                </nav>
+                            </div>
+                            
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#laporan" aria-expanded="false" aria-controls="laporan">
+                                  <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
+                                Laporan Transaksi
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="laporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="admin/barang masuk/view-print.php">Barang Masuk</a>
+                                    <a class="nav-link" href="admin/barang keluar/view-print.php">Barang Keluar</a>
+                                 
+                                </nav> 
                             </div>
                 </nav>
             </div>
@@ -105,9 +123,7 @@ if(isset($_POST["simpan"]) ){
                         </ol>
                          <div class="card mb-4">
                             <div class="card-header">
-                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                               Tambah Barang
-                                </button>
+        
                             </div>
                             <div class="card-body">
                         <!-- codingan tampil data -->
@@ -122,7 +138,7 @@ if(isset($_POST["simpan"]) ){
                                             <th>Pemasok</th>
                                             <th>Kode Gudang</th>
                                             <th>Satuan</th>
-                                            <th>Aksi</th>
+                                         
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -136,12 +152,6 @@ if(isset($_POST["simpan"]) ){
                                             <td><?php echo $data["nama_pemasok"]; ?></td>
                                             <td><?php echo $data["kd_gudang"]; ?></td>
                                             <td><?php echo $data["nama_satuan"]; ?></td>
-                                            <td> 
-                                            <a href="edit.php?id_barang=<?php echo $data["id_barang"] ?>"><button type="submit" name="edit" class="btn btn-warning">Edit</button> </a>
-                                            <a href="hapus.php?id_barang=<?php echo $data["id_barang"] ?>" onclick="return confirm('anda yakin untuk menghapus')
-                                            "><button type="submit" name="hapus" class="btn btn-danger">Hapus</button> </a>
-                                        </td>
-                                            
                                         </tr>
                                       <?php $i++; ?>
                                       <?php endforeach; ?>
@@ -167,76 +177,6 @@ if(isset($_POST["simpan"]) ){
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Stok</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- membuat codingan kode barang otomatis -->
-                    <?php                            
-                                    // mengambil data barang dengan kode paling besar
-                                    $query = mysqli_query($conn, "SELECT max(kode_barang) as kodeTerbesar FROM stok");
-                                    $data = mysqli_fetch_array($query);
-                                    $kodeBarang = $data['kodeTerbesar'];
-                                    
-                                    // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
-                                    // dan diubah ke integer dengan (int)
-                                    $urutan = (int) substr($kodeBarang, 3, 3);
-                                    
-                                    // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
-                                    $urutan++;
-                                    
-                                    // membentuk kode barang baru
-                                    // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
-                                    // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
-                                    // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
-                                    $huruf = "KDB";
-                                    $kodeBarang = $huruf . sprintf("%03s", $urutan);
-                      ?>
-                     <form action="" method="post">
-                         <label for="exampleFormControlInput1" class="form-label">Kode Barang</label>
-                          <input type="text" class="form-control" id="exampleFormControlInput1" name="kd_brg"  readonly value="<?php echo $kodeBarang ?> " autocomplete="off" required>
-                        <label for="exampleFormControlInput1" class="form-label mt-2">Nama Barang</label>
-                         <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_barang" autocomplete="off">
-                          <label for="exampleFormControlInput1" class="form-label mt-2"">Quantity</label>
-                         <input type="number" class="form-control" id="exampleFormControlInput1" name="qty">
-                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Nama Pemasok</label>
-                            <select name="pemasok" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM pemasok");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_pemasok"] .' ">'.$data["nama_pemasok"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Kode Gudang</label>
-                            <select name="kd_gudang" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM data_gudang");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_gudang"] .' ">'.$data["kd_gudang"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label mt-2"">Satuan</label>
-                            <select name="satuan" id="" class="form-control">
-                                <?php 
-                               $q=mysqli_query($conn,"SELECT * FROM satuan");
-                               while($data=mysqli_fetch_assoc($q)){
-                                echo' <option  value=" '.$data["id_satuan"] .' ">'.$data["nama_satuan"].'</option> ';
-                               }
-                               ?>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3" name="simpan">Simpan</button>
-                      </form>    
-                </div>
-                <div class="modal-footer">
-                   
                 </div>
                 </div>
             </div>
@@ -265,8 +205,39 @@ if(isset($_POST["simpan"]) ){
                         [5,10,25,50,100,"ALL"]
                     ]
                 } );
+                table.buttons().container()
+                    .appendTo( '#data_tabel_wrapper .col-md-6:eq(0)' );
             } );
         </script>
-       
+        <!-- <script>
+                    $(document).ready(function() {
+            $('#data_tabel').DataTable( {
+                "order": [[ 3, "desc" ]],
+                lengthMenu:[
+                        [5,10,25,50,100,-1],
+                        [5,10,25,50,100,"ALL"]
+                    ]
+            } );
+        } );
+        </script> -->
+
     </body>
+    <!-- <script>
+            swal({
+  title: "Yakin Untuk Menghapus?",
+  text: "Data Yang Anda Delete Tidak Bisa Di Pulihkan Lagi!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Berhasil,Data Terhapus!", {
+      icon: "success",
+    });
+  } else {
+    swal("Anda Gagal Menghapus Data!");
+  }
+})
+    </script> -->
 </html>

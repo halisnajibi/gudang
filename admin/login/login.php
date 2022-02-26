@@ -1,40 +1,47 @@
-<?php 
+<?php  
+// mengaktifkan session pada php
 session_start();
-if(isset($_SESSION["username"])){
-      header("location:../../index.php");
-}
-require'../../functions.php';
-
-$username="";
-$password="";
-$err="";
+ 
+// menghubungkan php dengan koneksi database
+include '../../functions.php';
+ 
+// menangkap data yang dikirim dari form login
 if(isset($_POST["login"])){
-    $username=$_POST["username"];
-    $password=$_POST["pw"];
+$user = $_POST['user'];
+$pass = $_POST['pw'];
 
-    //cek apakah username dan pw sudah di isi
-    if($username == '' OR $password == ''){
-        $err = "silahkan masukan username dan password !!";
-    }
-
-    //cek apakah form username dan pw sudah cocok dengan db
-    if(empty($err)){
-        $sql1="SELECT * FROM login WHERE username='$username'";
-        $q1=mysqli_query($conn,$sql1);
-        $r1=mysqli_fetch_assoc($q1);
-
-        if($r1["pass"] != $password){
-            $err = "akun tidak ditemukan !!";
-        }
-    }
-
-    //kalo cocok pindahkan
-    if(empty($err)){
-        $_SESSION["username"]= $username;
-        echo "login berhasil";
-       header("location:../../index.php");
-    }
+// menyeleksi data user dengan username dan password yang sesuai
+$login = mysqli_query($conn,"SELECT * FROM login WHERE username='$user' AND pass='$pass'");
+// menghitung jumlah data yang ditemukan
+$cek = mysqli_num_rows($login);
+ 
+// cek apakah username dan password di temukan pada database
+if($cek > 0){
+ 
+	$data = mysqli_fetch_assoc($login);
+ 
+	// cek jika user login sebagai admin
+	if($data['level']=="admin"){
+ 
+		// buat session login dan username
+		$_SESSION['username'] = $user;
+		$_SESSION['level'] = "admin";
+		// alihkan ke halaman dashboard admin
+		header("location:../../index.php");
+ 
+	// cek jika user login sebagai owner
+	}else if($data['level']=="owner"){
+		// buat session login dan username
+		$_SESSION['username'] = $user;
+		$_SESSION['level'] = "owner";
+		// alihkan ke halaman dashboard owner
+		header("location:../owner/owner.php");
+ 
+	}	}else{
+	header("location:login.php?pesan=gagal");
 }
+  }
+ 
 ?>
 
 <!DOCTYPE html>
@@ -47,18 +54,11 @@ if(isset($_POST["login"])){
         <meta name="author" content="" />
         <title>Login</title>
         <link href="../../css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <style>
-            p{
-                font-weight: bold;
-                font-size: 13px;
-                margin-left: 20px;
-                margin-top: 20px;
-                color: red;
-            }
-        </style>
+      
     </head>
-    <body class="bg-primary">
+    <body class="">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -68,17 +68,23 @@ if(isset($_POST["login"])){
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <p class="pesan">
-                                         <?php 
-                                        if($err){
-                                            echo $err;
+                                    <?php 
+                                    if(isset($_GET['pesan'])){
+                                        if($_GET['pesan']=="gagal"){
+                                            echo "
+                                                <script>
+                                                    alert('Username atau Password Salah!');
+                                                </script>
+                                            ";
                                         }
-                                    ?>
+                                    }
+	                                    ?>
                                     </p>
                                    
                                     <div class="card-body">
                                         <form method="post">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="text" name="username" placeholder="Username" autocomplete="off"/>
+                                                <input class="form-control" id="inputEmail" type="text" name="user" placeholder="Username" autocomplete="off"/>
                                                 <label for="inputEmail">Unsername</label>
                                             </div>
                                             <div class="form-floating mb-3">
@@ -109,7 +115,7 @@ if(isset($_POST["login"])){
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small ">
-                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div class="text-muted">Copyright &copy; Hn Gudang 2022</div>
                         </div>
                     </div>
                 </footer>
